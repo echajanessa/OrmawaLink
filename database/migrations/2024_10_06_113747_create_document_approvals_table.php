@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('document_approvals', function (Blueprint $table) {
             $table->id('approval_id');
-            $table->unsignedBigInteger('submission_id');
+            $table->string('submission_id');
             $table->unsignedBigInteger('approver_id');
             $table->string('status_id');
             $table->date('approval_date');

@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:lpj-reminder-emails')->everyThreeDays();
 
         // Jadwalkan command untuk mengirim Approval Reminder setiap hari
-        $schedule->command('app:send-approval-reminders')->dailyAt('10:00');
+        $schedule->command('app:send-approval-reminders')->everyMinute();
     }
 
     protected $middlewareGroups = [

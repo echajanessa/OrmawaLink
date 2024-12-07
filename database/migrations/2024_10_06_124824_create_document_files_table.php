@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('document_files', function (Blueprint $table) {
-            $table->id('document_id');
-            $table->unsignedBigInteger('submission_id')->nullable();
+            $table->string('document_id', 15)->primary();
+            $table->string('submission_id')->nullable();
             $table->unsignedBigInteger('approval_id')->nullable();
             $table->string('document_type');
             $table->unsignedBigInteger('uploaded_by');

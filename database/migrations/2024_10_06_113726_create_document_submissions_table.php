@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('document_submissions', function (Blueprint $table) {
-            $table->id('submission_id');
+            $table->string('submission_id', 15)->primary();
             $table->string('doc_type_id', 15);
             $table->unsignedBigInteger('user_id');
             $table->string('status_id', 15);
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('project_leader');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('location', 255);
             $table->string('organization');
             $table->date('submission_date');
             $table->timestamps();

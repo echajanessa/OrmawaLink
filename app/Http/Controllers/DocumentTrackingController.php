@@ -9,6 +9,7 @@ use App\Models\DocumentStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 
 class DocumentTrackingController extends Controller
@@ -103,8 +104,9 @@ class DocumentTrackingController extends Controller
             while ($currentUserId) {
                 $supervisor = DB::table('users')
                     ->leftJoin('supervisors', 'users.id', '=', 'supervisors.user_id')
+                    ->leftJoin('user_roles', 'users.role_id', '=', 'user_roles.role_id') // Join ke tabel user_roles
                     ->where('users.id', $currentUserId)
-                    ->select('users.id as approver_id', 'users.name', 'users.email', 'supervisors.spv_id')
+                    ->select('users.id as approver_id', 'users.name', 'users.email', 'supervisors.spv_id', 'user_roles.role_name')
                     ->first();
 
                 if ($supervisor) {
@@ -119,8 +121,10 @@ class DocumentTrackingController extends Controller
                         'name' => $supervisor->name,
                         'email' => $supervisor->email,
                         'status' => $document ? $document->doc_status : 'N/A',
-                        'file_path' => $file ? $file->file_path : null, // Dokumen yang ditandatangani
+                        'file_path' => $file ? $file->file_path : null,
                         'document_desc' => $file ? $file->document_desc : null,
+                        'is_rejected' => Str::contains($document->doc_status, 'Revisi') &&
+                            Str::contains($document->doc_status, $supervisor->role_name),
                     ];
                     $currentUserId = $supervisor->spv_id; //rekursif buat spv selanjutnya
                 } else {

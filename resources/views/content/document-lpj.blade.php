@@ -142,7 +142,7 @@
                                 </div>
                             </div>
                             <div class="row mb-6">
-                                <label class="col-sm-2 col-form-label" for="proposal_document">Dokumen Proposal</label>
+                                <label class="col-sm-2 col-form-label" for="proposal_document">Dokumen</label>
                                 <div class="col-sm-10">
                                     <input type="file" name="proposal_document" id="proposal_document"
                                         class="form-control phone-mask" {{ $mode === 'revision' ? '' : 'required' }}
